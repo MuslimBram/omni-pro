@@ -7,6 +7,7 @@ import ActivityChart from "@/components/dashboard/ActivityChart";
 import RecentActivity from "@/components/dashboard/RecentActivity";
 import SalesChart from "@/components/dashboard/SalesChart";
 import TopProducts from "@/components/dashboard/TopProducts";
+import GoalsWidget from "@/components/dashboard/GoalsWidget";
 import { Link } from "react-router-dom";
 import { createPageUrl } from "@/utils";
 
