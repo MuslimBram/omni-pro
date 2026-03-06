@@ -146,6 +146,7 @@ export default function Automations() {
                     </div>
                   </div>
                   <div className="flex items-center gap-3" onClick={e => e.stopPropagation()}>
+                    <AutomationRunner automation={auto} onRun={() => queryClient.invalidateQueries({ queryKey: ["automations"] })} />
                     <Switch checked={auto.status === "active"} onCheckedChange={() => toggleStatus(auto)} />
                     <Button variant="ghost" size="icon" onClick={() => deleteAutomation(auto.id)} className="text-slate-500 hover:text-red-400 hover:bg-red-500/10">
                       <Trash2 className="w-4 h-4" />
