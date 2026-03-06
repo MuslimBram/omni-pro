@@ -12,6 +12,7 @@ import {
 } from "lucide-react";
 import ProductForm from "@/components/shop/ProductForm";
 import OrderList from "@/components/shop/OrderList";
+import NewOrderForm from "@/components/shop/NewOrderForm";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 
@@ -26,6 +27,7 @@ export default function ShopManager() {
   const [editingProduct, setEditingProduct] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [orderDetail, setOrderDetail] = useState(null);
+  const [newOrderOpen, setNewOrderOpen] = useState(false);
 
   const { data: products = [] } = useQuery({
     queryKey: ["products"],
@@ -87,6 +89,7 @@ export default function ShopManager() {
           <TabsTrigger value="orders" className="data-[state=active]:bg-emerald-500/20 data-[state=active]:text-emerald-400">
             <ShoppingCart className="w-4 h-4 mr-2" /> Porosi ({orders.length})
           </TabsTrigger>
+
         </TabsList>
 
         <TabsContent value="products" className="mt-6">
@@ -148,6 +151,11 @@ export default function ShopManager() {
         </TabsContent>
 
         <TabsContent value="orders" className="mt-6">
+          <div className="flex justify-end mb-4">
+            <Button onClick={() => setNewOrderOpen(true)} className="bg-emerald-600 hover:bg-emerald-700">
+              <Plus className="w-4 h-4 mr-2" /> Porosi e Re
+            </Button>
+          </div>
           <OrderList orders={orders} onRefresh={refresh} onViewOrder={setOrderDetail} />
         </TabsContent>
       </Tabs>
@@ -162,6 +170,20 @@ export default function ShopManager() {
             product={editingProduct}
             onSave={() => { setProductDialogOpen(false); refresh(); }}
             onCancel={() => setProductDialogOpen(false)}
+          />
+        </DialogContent>
+      </Dialog>
+
+      {/* New Order Dialog */}
+      <Dialog open={newOrderOpen} onOpenChange={setNewOrderOpen}>
+        <DialogContent className="bg-slate-900 border-slate-700 max-w-2xl">
+          <DialogHeader>
+            <DialogTitle className="text-white">Porosi e Re</DialogTitle>
+          </DialogHeader>
+          <NewOrderForm
+            products={products}
+            onSave={() => { setNewOrderOpen(false); refresh(); }}
+            onCancel={() => setNewOrderOpen(false)}
           />
         </DialogContent>
       </Dialog>
