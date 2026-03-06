@@ -276,8 +276,8 @@ Be helpful, empathetic, and provide a clear solution.`,
       </div>
 
       </div>
-      {/* New Ticket Dialog */}
 
+      {/* New Ticket Dialog */}
       <Dialog open={newTicketOpen} onOpenChange={setNewTicketOpen}>
         <DialogContent className="bg-slate-900 border-slate-700">
           <DialogHeader><DialogTitle className="text-white">Tiketë e Re</DialogTitle></DialogHeader>
