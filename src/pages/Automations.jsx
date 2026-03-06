@@ -12,6 +12,7 @@ import { Plus, Zap, Clock, Play, Pause, Trash2, Activity, BarChart2 } from "luci
 import { toast } from "sonner";
 import { format } from "date-fns";
 import AutomationLogs from "@/components/automations/AutomationLogs";
+import AutomationRunner from "@/components/automations/AutomationRunner";
 
 const triggerLabels = { schedule: "Orar", event: "Event", webhook: "Webhook", manual: "Manual" };
 const actionLabels = { send_email: "Dërgo Email", generate_post: "Gjenero Post", update_inventory: "Përditëso Inventar", send_notification: "Njoftim", custom: "Custom" };
