@@ -8,9 +8,10 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Badge } from "@/components/ui/badge";
 import { Switch } from "@/components/ui/switch";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { Plus, Zap, Clock, Play, Pause, Trash2, Activity } from "lucide-react";
+import { Plus, Zap, Clock, Play, Pause, Trash2, Activity, BarChart2 } from "lucide-react";
 import { toast } from "sonner";
 import { format } from "date-fns";
+import AutomationLogs from "@/components/automations/AutomationLogs";
 
 const triggerLabels = { schedule: "Orar", event: "Event", webhook: "Webhook", manual: "Manual" };
 const actionLabels = { send_email: "Dërgo Email", generate_post: "Gjenero Post", update_inventory: "Përditëso Inventar", send_notification: "Njoftim", custom: "Custom" };
@@ -19,6 +20,7 @@ const triggerColors = { schedule: "bg-purple-500/10 text-purple-400", event: "bg
 export default function Automations() {
   const queryClient = useQueryClient();
   const [open, setOpen] = useState(false);
+  const [selectedAuto, setSelectedAuto] = useState(null);
   const [form, setForm] = useState({ name: "", description: "", trigger_type: "schedule", action_type: "send_email", schedule: "" });
 
   const { data: automations = [] } = useQuery({
@@ -95,41 +97,60 @@ export default function Automations() {
         </Dialog>
       </div>
 
-      {/* Automations List */}
-      {automations.length === 0 ? (
-        <div className="text-center py-20">
-          <Zap className="w-12 h-12 text-slate-700 mx-auto mb-3" />
-          <p className="text-slate-500">Nuk ka automatizime ende</p>
-          <p className="text-slate-600 text-sm mt-1">Krijo automatizimin e parë për biznesin tënd</p>
-        </div>
-      ) : (
-        <div className="space-y-3">
-          {automations.map((auto) => (
-            <div key={auto.id} className="bg-slate-800/30 border border-slate-700/50 rounded-2xl p-5 flex items-center gap-4 hover:border-slate-600/50 transition-all">
-              <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${auto.status === "active" ? "bg-emerald-500/10" : "bg-slate-700/50"}`}>
-                {auto.status === "active" ? <Play className="w-4 h-4 text-emerald-400" /> : <Pause className="w-4 h-4 text-slate-500" />}
-              </div>
-              <div className="flex-1 min-w-0">
-                <div className="flex items-center gap-2">
-                  <h4 className="text-white font-medium text-sm">{auto.name}</h4>
-                  <Badge className={triggerColors[auto.trigger_type]}>{triggerLabels[auto.trigger_type]}</Badge>
-                </div>
-                <p className="text-slate-500 text-xs mt-1 truncate">{auto.description || actionLabels[auto.action_type]}</p>
-                <div className="flex items-center gap-3 mt-2 text-xs text-slate-600">
-                  <span className="flex items-center gap-1"><Activity className="w-3 h-3" /> {auto.run_count || 0} ekzekutime</span>
-                  {auto.last_run && <span className="flex items-center gap-1"><Clock className="w-3 h-3" /> {format(new Date(auto.last_run), "dd/MM HH:mm")}</span>}
-                </div>
-              </div>
-              <div className="flex items-center gap-3">
-                <Switch checked={auto.status === "active"} onCheckedChange={() => toggleStatus(auto)} />
-                <Button variant="ghost" size="icon" onClick={() => deleteAutomation(auto.id)} className="text-slate-500 hover:text-red-400 hover:bg-red-500/10">
-                  <Trash2 className="w-4 h-4" />
-                </Button>
-              </div>
+      {/* Main content: list + logs panel */}
+      <div className="flex gap-6">
+        <div className="flex-1 min-w-0">
+          {automations.length === 0 ? (
+            <div className="text-center py-20">
+              <Zap className="w-12 h-12 text-slate-700 mx-auto mb-3" />
+              <p className="text-slate-500">Nuk ka automatizime ende</p>
+              <p className="text-slate-600 text-sm mt-1">Krijo automatizimin e parë për biznesin tënd</p>
             </div>
-          ))}
+          ) : (
+            <div className="space-y-3">
+              {automations.map((auto) => (
+                <div
+                  key={auto.id}
+                  onClick={() => setSelectedAuto(selectedAuto?.id === auto.id ? null : auto)}
+                  className={`bg-slate-800/30 border rounded-2xl p-5 flex items-center gap-4 cursor-pointer transition-all ${selectedAuto?.id === auto.id ? "border-purple-500/30 bg-purple-500/5" : "border-slate-700/50 hover:border-slate-600/50"}`}
+                >
+                  <div className={`w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 ${auto.status === "active" ? "bg-emerald-500/10" : "bg-slate-700/50"}`}>
+                    {auto.status === "active" ? <Play className="w-4 h-4 text-emerald-400" /> : <Pause className="w-4 h-4 text-slate-500" />}
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center gap-2">
+                      <h4 className="text-white font-medium text-sm">{auto.name}</h4>
+                      <Badge className={triggerColors[auto.trigger_type]}>{triggerLabels[auto.trigger_type]}</Badge>
+                    </div>
+                    <p className="text-slate-500 text-xs mt-1 truncate">{auto.description || actionLabels[auto.action_type]}</p>
+                    <div className="flex items-center gap-3 mt-2 text-xs text-slate-600">
+                      <span className="flex items-center gap-1"><Activity className="w-3 h-3" /> {auto.run_count || 0} ekzekutime</span>
+                      {auto.last_run && <span className="flex items-center gap-1"><Clock className="w-3 h-3" /> {format(new Date(auto.last_run), "dd/MM HH:mm")}</span>}
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-3" onClick={e => e.stopPropagation()}>
+                    <Switch checked={auto.status === "active"} onCheckedChange={() => toggleStatus(auto)} />
+                    <Button variant="ghost" size="icon" onClick={() => deleteAutomation(auto.id)} className="text-slate-500 hover:text-red-400 hover:bg-red-500/10">
+                      <Trash2 className="w-4 h-4" />
+                    </Button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
-      )}
+
+        {/* Logs Panel */}
+        {selectedAuto && (
+          <div className="w-96 flex-shrink-0 bg-slate-800/30 border border-slate-700/50 rounded-2xl p-5">
+            <div className="flex items-center gap-2 mb-4 pb-3 border-b border-slate-700/50">
+              <BarChart2 className="w-4 h-4 text-purple-400" />
+              <span className="text-white font-medium text-sm">Log-et e Ekzekutimit</span>
+            </div>
+            <AutomationLogs automation={selectedAuto} />
+          </div>
+        )}
+      </div>
     </div>
   );
 }
