@@ -8,7 +8,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/u
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import {
-  Plus, Package, ShoppingCart, Pencil, Trash2, AlertTriangle, Search
+  Plus, Package, ShoppingCart, Pencil, Trash2, AlertTriangle, Search, BarChart2, Boxes
 } from "lucide-react";
 import ProductForm from "@/components/shop/ProductForm";
 import OrderList from "@/components/shop/OrderList";
