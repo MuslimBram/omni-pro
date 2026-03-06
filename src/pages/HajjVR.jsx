@@ -8,8 +8,9 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import {
-  Globe2, MapPin, BookOpen, Play, Plus, ChevronRight, Loader2, Volume2
+  Globe2, MapPin, BookOpen, Plus, ChevronRight, Loader2
 } from "lucide-react";
+import HajjProgress from "@/components/hajj/HajjProgress";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
 
@@ -110,6 +111,16 @@ Write in Albanian.`,
           );
         })}
       </div>
+
+      {/* Journey + Progress */}
+      {experiences.length > 0 && (
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div className="lg:col-span-1">
+            <HajjProgress experiences={experiences} />
+          </div>
+          <div className="lg:col-span-2" />
+        </div>
+      )}
 
       {/* Journey Timeline */}
       {experiences.length > 0 ? (
