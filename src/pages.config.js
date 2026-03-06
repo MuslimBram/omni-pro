@@ -51,6 +51,9 @@ import Dashboard from './pages/Dashboard';
 import SocialMedia from './pages/SocialMedia';
 import Automations from './pages/Automations';
 import CustomerSupport from './pages/CustomerSupport';
+import HajjVR from './pages/HajjVR';
+import ShopManager from './pages/ShopManager';
+import Settings from './pages/Settings';
 import __Layout from './Layout.jsx';
 
 
@@ -59,6 +62,9 @@ export const PAGES = {
     "SocialMedia": SocialMedia,
     "Automations": Automations,
     "CustomerSupport": CustomerSupport,
+    "HajjVR": HajjVR,
+    "ShopManager": ShopManager,
+    "Settings": Settings,
 }
 
 export const pagesConfig = {
