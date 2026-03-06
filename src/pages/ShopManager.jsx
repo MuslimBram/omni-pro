@@ -13,6 +13,8 @@ import {
 import ProductForm from "@/components/shop/ProductForm";
 import OrderList from "@/components/shop/OrderList";
 import NewOrderForm from "@/components/shop/NewOrderForm";
+import ShopAnalytics from "@/components/shop/ShopAnalytics";
+import InventoryManager from "@/components/shop/InventoryManager";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 

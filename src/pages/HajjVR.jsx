@@ -11,6 +11,7 @@ import {
   Globe2, MapPin, BookOpen, Plus, ChevronRight, Loader2
 } from "lucide-react";
 import HajjProgress from "@/components/hajj/HajjProgress";
+import VRViewer from "@/components/hajj/VRViewer";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
 
