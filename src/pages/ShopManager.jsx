@@ -91,7 +91,12 @@ export default function ShopManager() {
           <TabsTrigger value="orders" className="data-[state=active]:bg-emerald-500/20 data-[state=active]:text-emerald-400">
             <ShoppingCart className="w-4 h-4 mr-2" /> Porosi ({orders.length})
           </TabsTrigger>
-
+          <TabsTrigger value="inventory" className="data-[state=active]:bg-emerald-500/20 data-[state=active]:text-emerald-400">
+            <Boxes className="w-4 h-4 mr-2" /> Inventar
+          </TabsTrigger>
+          <TabsTrigger value="analytics" className="data-[state=active]:bg-emerald-500/20 data-[state=active]:text-emerald-400">
+            <BarChart2 className="w-4 h-4 mr-2" /> Analitikë
+          </TabsTrigger>
         </TabsList>
 
         <TabsContent value="products" className="mt-6">
