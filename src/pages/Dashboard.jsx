@@ -89,6 +89,33 @@ export default function Dashboard() {
           <TopProducts orders={orders} products={products} />
         </div>
       </div>
+
+      {/* Goals Row */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div className="lg:col-span-1">
+          <GoalsWidget orders={orders} posts={posts} />
+        </div>
+        <div className="lg:col-span-2 bg-slate-800/20 border border-slate-700/50 rounded-2xl p-5">
+          <h3 className="text-white font-semibold text-sm mb-4 flex items-center gap-2">
+            <HeadphonesIcon className="w-4 h-4 text-sky-400" /> Tiketa të fundit
+          </h3>
+          <div className="space-y-2">
+            {tickets.slice(0, 5).map(t => (
+              <div key={t.id} className="flex items-center gap-3 py-2 border-b border-slate-700/30 last:border-0">
+                <div className={`w-2 h-2 rounded-full flex-shrink-0 ${t.priority === "urgent" ? "bg-red-400" : t.priority === "high" ? "bg-amber-400" : "bg-slate-500"}`} />
+                <div className="flex-1 min-w-0">
+                  <p className="text-white text-xs font-medium truncate">{t.subject}</p>
+                  <p className="text-slate-600 text-xs">{t.customer_name}</p>
+                </div>
+                <span className={`text-[10px] px-2 py-0.5 rounded-full ${t.status === "resolved" ? "bg-emerald-500/10 text-emerald-400" : t.status === "open" ? "bg-sky-500/10 text-sky-400" : "bg-slate-700 text-slate-400"}`}>
+                  {t.status}
+                </span>
+              </div>
+            ))}
+            {tickets.length === 0 && <p className="text-slate-600 text-sm text-center py-6">Nuk ka tiketa</p>}
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
