@@ -1,10 +1,12 @@
 import React from "react";
 import { useQuery } from "@tanstack/react-query";
 import { base44 } from "@/api/base44Client";
-import { Sparkles, ShoppingBag, HeadphonesIcon, Zap, Globe2, TrendingUp } from "lucide-react";
+import { Sparkles, ShoppingBag, HeadphonesIcon, Zap, Globe2 } from "lucide-react";
 import StatCard from "@/components/dashboard/StatCard";
 import ActivityChart from "@/components/dashboard/ActivityChart";
 import RecentActivity from "@/components/dashboard/RecentActivity";
+import SalesChart from "@/components/dashboard/SalesChart";
+import TopProducts from "@/components/dashboard/TopProducts";
 import { Link } from "react-router-dom";
 import { createPageUrl } from "@/utils";
 
@@ -74,6 +76,16 @@ export default function Dashboard() {
         </div>
         <div>
           <RecentActivity posts={posts} orders={orders} tickets={tickets} />
+        </div>
+      </div>
+
+      {/* Sales Analytics Row */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div className="lg:col-span-2">
+          <SalesChart orders={orders} />
+        </div>
+        <div>
+          <TopProducts orders={orders} products={products} />
         </div>
       </div>
     </div>
