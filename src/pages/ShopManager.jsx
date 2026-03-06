@@ -165,6 +165,14 @@ export default function ShopManager() {
           </div>
           <OrderList orders={orders} onRefresh={refresh} onViewOrder={setOrderDetail} />
         </TabsContent>
+
+        <TabsContent value="inventory" className="mt-6">
+          <InventoryManager products={products} onRefresh={refresh} />
+        </TabsContent>
+
+        <TabsContent value="analytics" className="mt-6">
+          <ShopAnalytics orders={orders} products={products} />
+        </TabsContent>
       </Tabs>
 
       {/* Product Form Dialog */}
