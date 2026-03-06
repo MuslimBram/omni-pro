@@ -53,6 +53,22 @@ export default function Automations() {
 
   return (
     <div className="space-y-6">
+      {/* Stats bar */}
+      <div className="grid grid-cols-3 gap-3">
+        <div className="bg-emerald-500/5 border border-emerald-500/20 rounded-xl p-4">
+          <p className="text-slate-500 text-xs">Aktive</p>
+          <p className="text-emerald-400 text-2xl font-bold">{automations.filter(a => a.status === "active").length}</p>
+        </div>
+        <div className="bg-slate-800/30 border border-slate-700/50 rounded-xl p-4">
+          <p className="text-slate-500 text-xs">Të Ndaletura</p>
+          <p className="text-white text-2xl font-bold">{automations.filter(a => a.status === "paused").length}</p>
+        </div>
+        <div className="bg-purple-500/5 border border-purple-500/20 rounded-xl p-4">
+          <p className="text-slate-500 text-xs">Ekzekutime Totale</p>
+          <p className="text-purple-400 text-2xl font-bold">{automations.reduce((s, a) => s + (a.run_count || 0), 0)}</p>
+        </div>
+      </div>
+
       <div className="flex justify-between items-center">
         <div>
           <p className="text-slate-400 text-sm">Menaxho automatizime për biznesin tënd</p>
