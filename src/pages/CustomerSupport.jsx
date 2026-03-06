@@ -119,8 +119,32 @@ Be helpful, empathetic, and provide a clear solution.`,
     toast.success("Tiketa u fshi!");
   };
 
+  const openCount = tickets.filter(t => t.status === "open").length;
+  const resolvedCount = tickets.filter(t => t.status === "resolved").length;
+  const urgentCount = tickets.filter(t => t.priority === "urgent").length;
+
   return (
-    <div className="flex gap-6 h-[calc(100vh-130px)]">
+    <div className="flex flex-col gap-4 h-[calc(100vh-110px)]">
+      {/* Stats row */}
+      <div className="grid grid-cols-4 gap-3 flex-shrink-0">
+        <div className="bg-slate-800/30 border border-slate-700/50 rounded-xl p-3">
+          <p className="text-slate-500 text-xs">Totale</p>
+          <p className="text-white text-xl font-bold">{tickets.length}</p>
+        </div>
+        <div className="bg-sky-500/5 border border-sky-500/20 rounded-xl p-3">
+          <p className="text-slate-500 text-xs">Hapura</p>
+          <p className="text-sky-400 text-xl font-bold">{openCount}</p>
+        </div>
+        <div className="bg-emerald-500/5 border border-emerald-500/20 rounded-xl p-3">
+          <p className="text-slate-500 text-xs">Zgjidhura</p>
+          <p className="text-emerald-400 text-xl font-bold">{resolvedCount}</p>
+        </div>
+        <div className="bg-red-500/5 border border-red-500/20 rounded-xl p-3">
+          <p className="text-slate-500 text-xs">Urgjente</p>
+          <p className="text-red-400 text-xl font-bold">{urgentCount}</p>
+        </div>
+      </div>
+      <div className="flex gap-6 flex-1 min-h-0">
       {/* Ticket List */}
       <div className="w-96 flex-shrink-0 flex flex-col">
         <div className="flex items-center gap-2 mb-4">
