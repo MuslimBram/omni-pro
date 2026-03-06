@@ -9,7 +9,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import {
   HeadphonesIcon, Plus, Send, Loader2, Sparkles,
-  Circle, CheckCircle2, Clock, AlertCircle, MessageSquare
+  Circle, CheckCircle2, Clock, AlertCircle, MessageSquare, Trash2, Mail
 } from "lucide-react";
 import { toast } from "sonner";
 import { format } from "date-fns";
@@ -161,9 +161,17 @@ Be helpful, empathetic, and provide a clear solution.`,
                 </Badge>
               </div>
               <p className="text-slate-500 text-xs truncate">{ticket.customer_name} • {ticket.customer_email}</p>
-              <p className="text-slate-600 text-xs mt-1">
-                {ticket.created_date ? format(new Date(ticket.created_date), "dd/MM/yyyy HH:mm") : ""}
-              </p>
+              <div className="flex items-center justify-between mt-1">
+                <p className="text-slate-600 text-xs">
+                  {ticket.created_date ? format(new Date(ticket.created_date), "dd/MM/yyyy HH:mm") : ""}
+                </p>
+                <button
+                  onClick={e => { e.stopPropagation(); deleteTicket(ticket.id); }}
+                  className="text-slate-700 hover:text-red-400 transition-colors"
+                >
+                  <Trash2 className="w-3 h-3" />
+                </button>
+              </div>
             </div>
           ))}
           {filteredTickets.length === 0 && (
