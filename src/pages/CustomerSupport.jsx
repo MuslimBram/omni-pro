@@ -101,6 +101,22 @@ Be helpful, empathetic, and provide a clear solution.`,
     await base44.entities.SupportTicket.update(selectedTicket.id, { status });
     queryClient.invalidateQueries({ queryKey: ["tickets"] });
     setSelectedTicket({ ...selectedTicket, status });
+    if (status === "resolved" && selectedTicket.customer_email) {
+      await base44.integrations.Core.SendEmail({
+        to: selectedTicket.customer_email,
+        subject: `Tiketa juaj u zgjidh: ${selectedTicket.subject}`,
+        body: `Përshëndetje ${selectedTicket.customer_name},\n\nTiketa juaj "${selectedTicket.subject}" u zgjidh me sukses nga ekipi ynë.\n\nFaleminderit për kontaktin!\nEkipi SmileShop.al`,
+        from_name: "SmileShop.al Support",
+      });
+      toast.success("Email konfirmimi u dërgua te klienti!");
+    }
+  };
+
+  const deleteTicket = async (id) => {
+    await base44.entities.SupportTicket.delete(id);
+    queryClient.invalidateQueries({ queryKey: ["tickets"] });
+    if (selectedTicket?.id === id) setSelectedTicket(null);
+    toast.success("Tiketa u fshi!");
   };
 
   return (
