@@ -13,6 +13,7 @@ const platforms = [
   { value: "tiktok", label: "TikTok" },
   { value: "twitter", label: "Twitter/X" },
   { value: "linkedin", label: "LinkedIn" },
+  { value: "web", label: "Web / Blog" },
 ];
 
 export default function PostGenerator({ onPostCreated }) {

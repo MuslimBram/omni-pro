@@ -5,7 +5,8 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import PostGenerator from "@/components/social/PostGenerator";
 import PostGrid from "@/components/social/PostGrid";
 import PostScheduler from "@/components/social/PostScheduler";
-import { Calendar, Sparkles, LayoutGrid } from "lucide-react";
+import CalendarView from "@/components/social/CalendarView";
+import { Calendar, Sparkles, LayoutGrid, CalendarDays } from "lucide-react";
 
 export default function SocialMedia() {
   const queryClient = useQueryClient();
@@ -27,8 +28,11 @@ export default function SocialMedia() {
           <TabsTrigger value="posts" className="data-[state=active]:bg-amber-500/20 data-[state=active]:text-amber-400">
             <LayoutGrid className="w-3.5 h-3.5 mr-1.5" /> Postimet ({posts.length})
           </TabsTrigger>
+          <TabsTrigger value="calendar" className="data-[state=active]:bg-amber-500/20 data-[state=active]:text-amber-400">
+            <CalendarDays className="w-3.5 h-3.5 mr-1.5" /> Kalendar {scheduledCount > 0 && `(${scheduledCount})`}
+          </TabsTrigger>
           <TabsTrigger value="schedule" className="data-[state=active]:bg-amber-500/20 data-[state=active]:text-amber-400">
-            <Calendar className="w-3.5 h-3.5 mr-1.5" /> Planifiko {scheduledCount > 0 && `(${scheduledCount})`}
+            <Calendar className="w-3.5 h-3.5 mr-1.5" /> Planifiko
           </TabsTrigger>
         </TabsList>
         <TabsContent value="generate" className="mt-6">
@@ -36,6 +40,9 @@ export default function SocialMedia() {
         </TabsContent>
         <TabsContent value="posts" className="mt-6">
           <PostGrid posts={posts} onRefresh={refresh} />
+        </TabsContent>
+        <TabsContent value="calendar" className="mt-6">
+          <CalendarView posts={posts} onRefresh={refresh} />
         </TabsContent>
         <TabsContent value="schedule" className="mt-6">
           <PostScheduler posts={posts} onRefresh={refresh} />

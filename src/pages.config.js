@@ -47,24 +47,26 @@
  *
  * The mainPage value must match a key in the PAGES object exactly.
  */
-import Dashboard from './pages/Dashboard';
-import SocialMedia from './pages/SocialMedia';
 import Automations from './pages/Automations';
 import CustomerSupport from './pages/CustomerSupport';
+import Dashboard from './pages/Dashboard';
 import HajjVR from './pages/HajjVR';
-import ShopManager from './pages/ShopManager';
 import Settings from './pages/Settings';
+import ShopManager from './pages/ShopManager';
+import SocialMedia from './pages/SocialMedia';
+import CRM from './pages/CRM';
 import __Layout from './Layout.jsx';
 
 
 export const PAGES = {
-    "Dashboard": Dashboard,
-    "SocialMedia": SocialMedia,
     "Automations": Automations,
     "CustomerSupport": CustomerSupport,
+    "Dashboard": Dashboard,
     "HajjVR": HajjVR,
-    "ShopManager": ShopManager,
     "Settings": Settings,
+    "ShopManager": ShopManager,
+    "SocialMedia": SocialMedia,
+    "CRM": CRM,
 }
 
 export const pagesConfig = {
