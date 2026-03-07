@@ -8,6 +8,7 @@ const pageTitles = {
   SocialMedia: "Social Media AI Generator",
   Automations: "Automatizime Biznesi",
   CustomerSupport: "Customer Support AI",
+  CRM: "CRM - Menaxhimi i Klientëve",
   HajjVR: "Hajj VR Platform",
   ShopManager: "Shop Manager - SmileShop.al",
   Settings: "Cilësimet",
