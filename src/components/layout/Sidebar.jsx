@@ -24,6 +24,7 @@ const navItems = [
   { name: "Automatizime", icon: Zap, page: "Automations" },
   { name: "Support AI", icon: HeadphonesIcon, page: "CustomerSupport" },
   { name: "Hajj VR", icon: Globe2, page: "HajjVR" },
+  { name: "CRM", icon: Users, page: "CRM" },
   { name: "Shop Manager", icon: ShoppingBag, page: "ShopManager" },
   { name: "Cilësimet", icon: Settings, page: "Settings" },
 ];
