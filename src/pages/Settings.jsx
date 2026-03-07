@@ -9,7 +9,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { toast } from "sonner";
 import {
-  User, Store, Sparkles, HeadphonesIcon, Bell, Save, Loader2, Shield
+  User, Store, Sparkles, HeadphonesIcon, Bell, Save, Loader2, Shield, BarChart2, Send
 } from "lucide-react";
 
 function useSetting(key, defaultValue) {
@@ -56,7 +56,9 @@ export default function Settings() {
   });
   const [notifSettings, setNotifSettings] = useState({
     email_on_order: true, email_on_ticket: true, low_stock_alert: true,
+    weekly_report: false, weekly_report_email: "",
   });
+  const [sendingReport, setSendingReport] = useState(false);
 
   useEffect(() => {
     base44.auth.me().then(setUser).catch(() => {});
@@ -115,6 +117,7 @@ export default function Settings() {
             { value: "social", icon: Sparkles, label: "Social" },
             { value: "support", icon: HeadphonesIcon, label: "Support" },
             { value: "notifications", icon: Bell, label: "Njoftimet" },
+            { value: "reports", icon: BarChart2, label: "Raporte" },
           ].map(t => (
             <TabsTrigger key={t.value} value={t.value} className="data-[state=active]:bg-amber-500/20 data-[state=active]:text-amber-400">
               <t.icon className="w-3.5 h-3.5 mr-1.5" /> {t.label}
@@ -269,6 +272,72 @@ export default function Settings() {
               ))}
             </div>
             <SaveBtn />
+          </div>
+        </TabsContent>
+
+        {/* Reports Tab */}
+        <TabsContent value="reports" className="mt-6">
+          <div className="bg-slate-800/30 border border-slate-700/50 rounded-2xl p-6 space-y-5">
+            <h3 className="text-white font-semibold flex items-center gap-2">
+              <BarChart2 className="w-4 h-4 text-amber-400" /> Raporte Javore Automatike
+            </h3>
+            <div className="flex items-center justify-between py-3 border border-slate-700/30 rounded-xl px-4">
+              <div>
+                <p className="text-white text-sm font-medium">Aktivizo Raportet Javore</p>
+                <p className="text-slate-500 text-xs">Merr çdo javë një raport me shitjet, automatizmet dhe suportin</p>
+              </div>
+              <Switch
+                checked={notifSettings.weekly_report}
+                onCheckedChange={(v) => setNotifSettings({...notifSettings, weekly_report: v})}
+              />
+            </div>
+
+            {notifSettings.weekly_report && (
+              <div className="space-y-1.5">
+                <Label className="text-slate-300 text-xs">Email për Raport (lër bosh për email-in e llogarisë)</Label>
+                <Input
+                  value={notifSettings.weekly_report_email}
+                  onChange={e => setNotifSettings({...notifSettings, weekly_report_email: e.target.value})}
+                  className="bg-slate-800 border-slate-700 text-white"
+                  placeholder="business@smileshop.al"
+                />
+              </div>
+            )}
+
+            <div className="bg-slate-800/40 rounded-xl p-4 space-y-2">
+              <p className="text-slate-300 text-sm font-medium">Çfarë përfshin raporti:</p>
+              <ul className="space-y-1.5 text-slate-500 text-sm">
+                {[
+                  "📊 Shitjet javore — të ardhurat dhe numri i porosive",
+                  "⚡ Automatizmet — sa janë aktive dhe ekzekutime",
+                  "🎧 Support — tiketa të reja dhe të zgjidhura",
+                ].map((item, i) => (
+                  <li key={i} className="flex items-center gap-2">{item}</li>
+                ))}
+              </ul>
+            </div>
+
+            <div className="flex gap-3">
+              <SaveBtn />
+              <Button
+                variant="outline"
+                disabled={sendingReport}
+                className="border-slate-600 text-slate-300 hover:bg-slate-700"
+                onClick={async () => {
+                  setSendingReport(true);
+                  const res = await base44.functions.invoke("sendWeeklyReport", {});
+                  if (res.data?.success) {
+                    toast.success(`Raporti u dërgua te ${res.data.sent_to}!`);
+                  } else {
+                    toast.error("Gabim gjatë dërgimit: " + res.data?.error);
+                  }
+                  setSendingReport(false);
+                }}
+              >
+                {sendingReport ? <Loader2 className="w-4 h-4 mr-2 animate-spin" /> : <Send className="w-4 h-4 mr-2" />}
+                Dërgo Raport Tani
+              </Button>
+            </div>
           </div>
         </TabsContent>
       </Tabs>
